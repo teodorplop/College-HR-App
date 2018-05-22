@@ -36,21 +36,21 @@ public class ApplicationsTable : BaseTable<ApplicationsTable, Application> {
 	public ApplicationsTable() : base("APPLICATIONS") {
 	}
 
-	public bool Select(int positionId, out List<StudentApplication> students, out string error) {
+	public bool Select(int positionId, out List<StudentApplication> applications, out string error) {
 		string commandStr = "select APPLICATIONS.ID, STUDENTS.FIRSTNAME, STUDENTS.LASTNAME, STUDENTS.EMAIL, STUDENTS.COLLEGE";
 		commandStr += " from APPLICATIONS join STUDENTS on APPLICATIONS.STUDENTID=STUDENTS.EMAIL where APPLICATIONS.POSITION={0}";
 		commandStr = string.Format(commandStr, positionId);
 		SqlCommand command = new SqlCommand(commandStr, connection);
 
 		SqlDataReader reader = null;
-		students = new List<StudentApplication>();
+		applications = new List<StudentApplication>();
 		try {
 			connection.Open();
 			reader = command.ExecuteReader();
 
 			if (reader.HasRows)
 				while (reader.Read())
-					students.Add(new StudentApplication(reader));
+					applications.Add(new StudentApplication(reader));
 		} catch (Exception ex) {
 			error = "ApplicationsTable: " + ex.Message;
 			return false;

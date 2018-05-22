@@ -12,8 +12,7 @@
 
     <asp:Table ID="CandidatesTablePanel" CssClass="table table-hover" runat="server">
       <asp:TableHeaderRow runat="server">
-        <asp:TableHeaderCell runat="server" Text="First" />
-        <asp:TableHeaderCell runat="server" Text="Last" />
+        <asp:TableHeaderCell runat="server" Text="Name" />
         <asp:TableHeaderCell runat="server" Text="Email" />
         <asp:TableHeaderCell runat="server" Text="College" />
         <asp:TableHeaderCell runat="server" />

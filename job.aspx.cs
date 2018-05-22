@@ -50,13 +50,9 @@ public partial class job : System.Web.UI.Page {
 			TableRow row = new TableRow();
 			CandidatesTablePanel.Controls.Add(row);
 
-			TableCell firstName = new TableCell();
-			firstName.Text = app.firstName;
-			row.Controls.Add(firstName);
-
-			TableCell lastName = new TableCell();
-			lastName.Text = app.lastName;
-			row.Controls.Add(lastName);
+			TableCell name = new TableCell();
+			name.Text = app.firstName + " " + app.lastName;
+			row.Controls.Add(name);
 
 			TableCell email = new TableCell();
 			email.Text = app.email;
@@ -89,12 +85,11 @@ public partial class job : System.Web.UI.Page {
 
 	private void AcceptButton_Click(object sender, EventArgs e) {
 		int rowIdx;
-		string email;
 		if (!TryParse((sender as Control).ID, out rowIdx))
 			return;
 
 		string error;
-		if (!InterviewsTable.Instance.Insert(out error, applications[rowIdx - 1].email, positionId)) {
+		if (!InterviewsTable.Instance.Insert(applications[rowIdx - 1].email, positionId, out error)) {
 			(Master as MasterPage).ShowError(false, error);
 			return;
 		}
