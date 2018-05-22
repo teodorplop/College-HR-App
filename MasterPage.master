@@ -20,8 +20,19 @@
 </head>
 <body>
   <form id="form1" runat="server">
+    <asp:Panel ID="MenuPanel" runat="server" Width="100%" Style="margin-bottom: 55px">
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <ul class="navbar-nav mr-5">
+          <li class="nav-item"><a href="openings.aspx" class="nav-link">Job Openings</a></li>
+          <li class="nav-item"><a href="interviews.aspx" class="nav-link">Interviews</a></li>
+        </ul>
+      </nav>
+    </asp:Panel>
+
+    <asp:Panel ID="ResponsePanel" runat="server" Visible="false" />
+
     <div>
-      <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+      <asp:ContentPlaceHolder ID="body" runat="server">
       </asp:ContentPlaceHolder>
     </div>
   </form>
