@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.SqlTypes;
+using System.Web.UI.HtmlControls;
 
 public partial class interviews : System.Web.UI.Page {
 	List<StudentInterview> intervs;
@@ -36,6 +37,24 @@ public partial class interviews : System.Web.UI.Page {
 		TableRow row = new TableRow();
 		Schedule_InterviewsTable.Controls.Add(row);
 
+        TableCell name = new TableCell();
+        name.Text = intv.firstName + " " + intv.lastName;
+        row.Controls.Add(name);
+
+        TableCell email = new TableCell();
+        email.Text = intv.email;
+        row.Controls.Add(email);
+
+        TableCell position = new TableCell();
+        position.Text = intv.positionName;
+        row.Controls.Add(position);
+
+        TableCell date = new TableCell();
+        //date.Text = intv.date.ToString();
+        row.Controls.Add(date);
+
+        //HtmlGenericControl a = new HtmlGenericControl();
+        //a.hre
 		/*name.Text = intv.firstName + " " + intv.lastName;
 		row.Controls.Add(name);
 

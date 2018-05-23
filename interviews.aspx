@@ -10,6 +10,7 @@
       <asp:TableHeaderRow runat="server">
         <asp:TableHeaderCell runat="server" Text="Name" />
         <asp:TableHeaderCell runat="server" Text="Email" />
+        <asp:TableHeaderCell runat="server" Text="Position" />
         <asp:TableHeaderCell runat="server" Text="Date" />
         <asp:TableHeaderCell runat="server" Text="Result" />
       </asp:TableHeaderRow>
@@ -20,6 +21,7 @@
       <asp:TableHeaderRow runat="server">
         <asp:TableHeaderCell runat="server" Text="Name" />
         <asp:TableHeaderCell runat="server" Text="Email" />
+        <asp:TableHeaderCell runat="server" Text="Position" />
         <asp:TableHeaderCell runat="server" Text="Result" />
       </asp:TableHeaderRow>
     </asp:Table>
@@ -29,6 +31,7 @@
       <asp:TableHeaderRow runat="server">
         <asp:TableHeaderCell runat="server" Text="Name" />
         <asp:TableHeaderCell runat="server" Text="Email" />
+        <asp:TableHeaderCell runat="server" Text="Position" />
         <asp:TableHeaderCell runat="server" Text="Date" />
       </asp:TableHeaderRow>
     </asp:Table>
@@ -38,6 +41,7 @@
       <asp:TableHeaderRow runat="server">
         <asp:TableHeaderCell runat="server" Text="Name" />
         <asp:TableHeaderCell runat="server" Text="Email" />
+        <asp:TableHeaderCell runat="server" Text="Position" />
         <asp:TableHeaderCell runat="server" Text="Date" />
       </asp:TableHeaderRow>
     </asp:Table>
