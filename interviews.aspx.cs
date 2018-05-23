@@ -1,42 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data.SqlTypes;
-using System.Web.UI.HtmlControls;
+using AjaxControlToolkit;
 
 public partial class interviews : System.Web.UI.Page {
-	List<StudentInterview> intervs;
-	protected void Page_Load(object sender, EventArgs e) {
-		string error;
-		if (!InterviewsTable.Instance.Select(out intervs, out error)) {
-			(Master as MasterPage).ShowError(false, error);
-			return;
-		}
+    List<StudentInterview> intervs;
+    List<StudentInterview> toBeScheduled, past, today, future;
+    protected void Page_Load(object sender, EventArgs e) {
+        string error;
+        if (!InterviewsTable.Instance.Select(out intervs, out error)) {
+            (Master as MasterPage).ShowError(false, error);
+            return;
+        }
 
-		ShowInterviews();
-	}
+        ShowInterviews();
+    }
 
-	private void ShowInterviews() {
-		int rowIdx = 1;
-		foreach (StudentInterview intv in intervs) {
-			if (intv.date.IsNull)
-				Add_ToBeScheduledInterview(intv);
-			else if (intv.date.Value.Date < DateTime.Now.Date)
-				Add_PastInterview(intv);
-			else if (intv.date.Value.Date == DateTime.Now.Date)
-				Add_TodayInterview(intv);
-			else
-				Add_FutureInterview(intv);
-		}
-	}
+    private void ShowInterviews() {
+        toBeScheduled = new List<StudentInterview>();
+        past = new List<StudentInterview>();
+        today = new List<StudentInterview>();
+        future = new List<StudentInterview>();
 
-	private void Add_ToBeScheduledInterview(StudentInterview intv) {
-		TableRow row = new TableRow();
-		Schedule_InterviewsTable.Controls.Add(row);
+        foreach (StudentInterview intv in intervs) {
+            if (intv.date.IsNull)
+                Add_ToBeScheduledInterview(intv);
+            else if (intv.date.Value.Date < DateTime.Now.Date)
+                Add_PastInterview(intv);
+            else if (intv.date.Value.Date == DateTime.Now.Date)
+                Add_TodayInterview(intv);
+            else
+                Add_FutureInterview(intv);
+        }
+    }
 
+    private void AddBasicInfo(TableRow row, StudentInterview intv) {
         TableCell name = new TableCell();
         name.Text = intv.firstName + " " + intv.lastName;
         row.Controls.Add(name);
@@ -48,50 +46,82 @@ public partial class interviews : System.Web.UI.Page {
         TableCell position = new TableCell();
         position.Text = intv.positionName;
         row.Controls.Add(position);
+    }
 
+    private void AddDate(TableRow row, StudentInterview intv, bool editable) {
         TableCell date = new TableCell();
-        //date.Text = intv.date.ToString();
         row.Controls.Add(date);
 
-        //HtmlGenericControl a = new HtmlGenericControl();
-        //a.hre
-		/*name.Text = intv.firstName + " " + intv.lastName;
-		row.Controls.Add(name);
+        TextBox dateTextBox = new TextBox();
+        dateTextBox.ID = "dateTextBox_" + intv.interviewId;
+        dateTextBox.Text = intv.date.IsNull ? "Null" : intv.date.Value.ToString("dd/MM/yyyy");
+        dateTextBox.ReadOnly = true;
+        date.Controls.Add(dateTextBox);
 
-		TableCell email = new TableCell();
-		email.Text = intv.email;
-		row.Controls.Add(email);
+        if (editable) {
+            ImageButton calendarImgBtn = new ImageButton();
+            calendarImgBtn.ID = "calendarImgBtn_" + intv.interviewId;
+            calendarImgBtn.ImageUrl = "Resources/Calendar.png";
+            calendarImgBtn.Width = new Unit(30); // ugly as fuck?
+            date.Controls.Add(calendarImgBtn);
 
-		TableCell date = new TableCell();
-		date.Text = intv.date.ToString();
-		row.Controls.Add(date);*/
+            CalendarExtender calendarExt = new CalendarExtender();
+            calendarExt.PopupButtonID = calendarImgBtn.ID;
+            calendarExt.TargetControlID = dateTextBox.ID;
+            calendarExt.Format = "dd/MM/yyyy";
+            date.Controls.Add(calendarExt);
+        }
+    }
 
-		//TableCell buttons = new TableCell();
-		//row.Controls.Add(buttons);
+    private void AddResult(TableRow row, StudentInterview intv) {
+        TableCell result = new TableCell();
+        row.Controls.Add(result);
+    }
 
-		/*Button acceptButton = new Button();
-		acceptButton.ID = "Accept|" + rowIdx;
-		acceptButton.CssClass = "btn btn-success";
-		acceptButton.Text = "Accept";
-		acceptButton.Click += AcceptButton_Click;
-		buttons.Controls.Add(acceptButton);
+    private void Add_ToBeScheduledInterview(StudentInterview intv) {
+        toBeScheduled.Add(intv);
 
-		Button declineButton = new Button();
-		declineButton.ID = "Delete|" + rowIdx;
-		declineButton.CssClass = "btn btn-danger";
-		declineButton.Text = "Decline";
-		declineButton.Click += DeclineButton_Click;
-		buttons.Controls.Add(declineButton);*/
-	}
+        TableRow row = new TableRow();
+        Schedule_InterviewsTable.Controls.Add(row);
 
-	private void Add_PastInterview(StudentInterview intv) {
+        AddBasicInfo(row, intv);
+        AddDate(row, intv, true);
+    }
 
-	}
+    private void Add_PastInterview(StudentInterview intv) {
+        past.Add(intv);
 
-	private void Add_TodayInterview(StudentInterview intv) {
+        TableRow row = new TableRow();
+        Past_InterviewsTable.Controls.Add(row);
 
-	}
-	private void Add_FutureInterview(StudentInterview intv) {
+        AddBasicInfo(row, intv);
+        AddDate(row, intv, false);
+        AddResult(row, intv);
+    }
 
-	}
+    private void Add_TodayInterview(StudentInterview intv) {
+        today.Add(intv);
+
+        TableRow row = new TableRow();
+        Today_InterviewsTable.Controls.Add(row);
+
+        AddBasicInfo(row, intv);
+        AddResult(row, intv);
+    }
+    private void Add_FutureInterview(StudentInterview intv) {
+        future.Add(intv);
+
+        TableRow row = new TableRow();
+        Future_InterviewsTable.Controls.Add(row);
+
+        AddBasicInfo(row, intv);
+        AddDate(row, intv, false);
+    }
+
+    protected void ApplyChanges_Click(object sender, EventArgs e) {
+        foreach (StudentInterview intv in intervs) {
+            (Master as MasterPage).Alert((Utils.FindControlRecursive(MainPanel, "dateTextBox_" + intv.interviewId) as TextBox).Text);
+            //(Master as MasterPage).Alert((FindControl("dateTextBox_" + intv.interviewId) as TextBox).te);
+        }
+    }
 }
