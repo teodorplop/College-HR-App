@@ -28,7 +28,25 @@ public class Position : TableEntry {
 public class PositionsTable : BaseTable<PositionsTable, Position> {
 	public PositionsTable() : base("POSITIONS") { }
 
-	public bool Select(out int total, out string error) {
+    public bool Insert(string position, string category, string project, string location, string type, string description, out string error) {
+        string commandString = string.Format("INSERT INTO POSITIONS(Position, Category, Project, Location, Type, Description) VALUES('{0}', '{1}', '{2}', '{3}', '{4}', '{5}')", position, category, project, location, type, description);
+        SqlCommand command = new SqlCommand(commandString, connection);
+
+        try {
+            connection.Open();
+            command.ExecuteNonQuery();
+        } catch (Exception ex) {
+            error = ex.Message;
+            return false;
+        } finally {
+            connection.Close();
+        }
+
+        error = "Success!";
+        return true;
+    }
+
+    public bool Select(out int total, out string error) {
 		string commandStr = "SELECT count(*) FROM POSITIONS";
 		SqlCommand command = new SqlCommand(commandStr, connection);
 

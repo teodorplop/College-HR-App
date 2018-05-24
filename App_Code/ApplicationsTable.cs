@@ -63,8 +63,26 @@ public class ApplicationsTable : BaseTable<ApplicationsTable, Application> {
 		return true;
 	}
 
-	// duplicate, potential for greater things :(. too lazy
-	public bool Delete(int appId, out string error) {
+    public bool Insert(string studentEmail, int positionId, out string error) {
+        string commandString = string.Format("INSERT INTO APPLICATIONS(StudentId, Position) VALUES('{0}', '{1}')", studentEmail, positionId);
+        SqlCommand command = new SqlCommand(commandString, connection);
+
+        try {
+            connection.Open();
+            command.ExecuteNonQuery();
+        } catch (Exception ex) {
+            error = ex.Message;
+            return false;
+        } finally {
+            connection.Close();
+        }
+
+        error = "Success!";
+        return true;
+    }
+
+    // duplicate, potential for greater things :(. too lazy
+    public bool Delete(int appId, out string error) {
 		string commandString = "DELETE FROM APPLICATIONS WHERE ID=" + appId;
 		SqlCommand command = new SqlCommand(commandString, connection);
 

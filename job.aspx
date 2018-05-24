@@ -4,7 +4,7 @@
 </asp:Content>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="body" runat="Server">
-  <div class="container">
+  <asp:Panel ID="BodyPanel" runat="server" CssClass="container">
     <asp:Panel ID="DescriptionPanel" runat="server">
     </asp:Panel>
 
@@ -18,5 +18,14 @@
         <asp:TableHeaderCell runat="server" />
       </asp:TableHeaderRow>
     </asp:Table>
-  </div>
+
+    <asp:Table ID="AddCandidatesTable" CssClass="table table-hover" runat="server">
+      <asp:TableRow runat="server">
+        <asp:TableCell runat="server"><asp:TextBox ID="TextBoxName" CssClass="form-control" runat="server"/></asp:TableCell>
+        <asp:TableCell runat="server"><asp:TextBox ID="TextBoxEmail" CssClass="form-control" runat="server"/></asp:TableCell>
+        <asp:TableCell runat="server"><asp:TextBox ID="TextBoxCollege" CssClass="form-control" runat="server"/></asp:TableCell>
+        <asp:TableCell runat="server"><asp:Button ID="AddCandBtn" CssClass="btn btn-primary" runat="server" Text="Add Candidate" OnClick="AddCandBtn_Click"/></asp:TableCell>
+      </asp:TableRow>
+    </asp:Table>
+  </asp:Panel>
 </asp:Content>

@@ -8,7 +8,12 @@ using System.Web.UI.WebControls;
 
 public partial class MasterPage : System.Web.UI.MasterPage {
     protected void Page_Load(object sender, EventArgs e) {
-
+        UsernameLabel.Text = SessionManager.Instance.LoggedUser == null ? "" : SessionManager.Instance.LoggedUser;
+        LoginButton.Text = SessionManager.Instance.LoggedIn ? "Logout" : "Login";
+        
+        if (!SessionManager.Instance.LoggedIn) {
+            MenuPanel.Visible = false;
+        }
     }
 
 	public void ShowError(bool success, string message) {
@@ -36,4 +41,13 @@ public partial class MasterPage : System.Web.UI.MasterPage {
 	public void Alert(string message) {
 		ScriptManager.RegisterClientScriptBlock(this, GetType(), "alertMessage", "alert('" + message + "')", true);
 	}
+
+    protected void LoginButton_Click(object sender, EventArgs e) {
+        if (SessionManager.Instance.LoggedIn) {
+            SessionManager.Instance.Logout();
+            Response.Redirect("openings.aspx");
+        } else {
+            Response.Redirect("login.aspx");
+        }
+    }
 }
