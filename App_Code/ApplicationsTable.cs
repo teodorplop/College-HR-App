@@ -64,6 +64,8 @@ public class ApplicationsTable : BaseTable<ApplicationsTable, Application> {
 	}
 
     public bool Insert(string studentEmail, int positionId, out string error) {
+        studentEmail = studentEmail.Replace("'", "''");
+
         string commandString = string.Format("INSERT INTO APPLICATIONS(StudentId, Position) VALUES('{0}', '{1}')", studentEmail, positionId);
         SqlCommand command = new SqlCommand(commandString, connection);
 

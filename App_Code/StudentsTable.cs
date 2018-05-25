@@ -49,6 +49,11 @@ public class StudentsTable : BaseTable<StudentsTable, Student> {
     }
 
     public bool Insert(string email, string firstName, string lastName, string college, out string error) {
+        email = email.Replace("'", "''");
+        firstName = firstName.Replace("'", "''");
+        lastName = lastName.Replace("'", "''");
+        college = college.Replace("'", "''");
+
         string commandString = string.Format("INSERT INTO STUDENTS(Email, FirstName, LastName, College) VALUES('{0}', '{1}', '{2}', '{3}')", email, firstName, lastName, college);
         SqlCommand command = new SqlCommand(commandString, connection);
 

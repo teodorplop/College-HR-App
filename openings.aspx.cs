@@ -33,7 +33,6 @@ public partial class openings : System.Web.UI.Page {
     }
 
     private void PopulatePositions(List<string> categories, List<Position> positions) {
-        OpenPositions.Text = string.Format("{0} open positions", positions.Count);
 
         for (int i = 0; i < categories.Count; ++i)
             CreatePanel(categories[i], positions.Where(obj => obj.category == categories[i]));

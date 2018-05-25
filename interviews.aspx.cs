@@ -138,7 +138,7 @@ public partial class interviews : System.Web.UI.Page {
         string error;
         if (int.TryParse(id, out intvId)) {
             StudentInterview interview = intervs.Find(obj => obj.interviewId == intvId);
-            if (InterviewsTable.Instance.Update(intvId, true, out error) && EmployeesTable.Instance.Insert(interview.email, interview.positionId, out error)) {
+            if (InterviewsTable.Instance.Update(intvId, accepted, out error) && (!accepted || EmployeesTable.Instance.Insert(interview.email, interview.positionId, out error))) {
                 (Master as MasterPage).ShowError(true, "Success");
                 Response.Redirect(Request.RawUrl);
                 return;
@@ -214,11 +214,13 @@ public partial class interviews : System.Web.UI.Page {
             }
         }
 
-        if (hasErrors) {
-            (Master as MasterPage).ShowError(false, err);
-        } else if (dirty) {
+        if (dirty) {
             Response.Redirect(Request.RawUrl);
             (Master as MasterPage).ShowError(true, "Success!");
+            return;
+        }
+        if (hasErrors) {
+            (Master as MasterPage).ShowError(false, err);
         }
     }
 }

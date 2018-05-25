@@ -29,6 +29,13 @@ public class PositionsTable : BaseTable<PositionsTable, Position> {
 	public PositionsTable() : base("POSITIONS") { }
 
     public bool Insert(string position, string category, string project, string location, string type, string description, out string error) {
+        position = position.Replace("'", "''");
+        category = category.Replace("'", "''");
+        project = project.Replace("'", "''");
+        location = location.Replace("'", "''");
+        type = type.Replace("'", "''");
+        description = description.Replace("'", "''");
+
         string commandString = string.Format("INSERT INTO POSITIONS(Position, Category, Project, Location, Type, Description) VALUES('{0}', '{1}', '{2}', '{3}', '{4}', '{5}')", position, category, project, location, type, description);
         SqlCommand command = new SqlCommand(commandString, connection);
 

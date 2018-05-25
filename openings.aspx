@@ -7,7 +7,6 @@
   <asp:Button ID="LoginButton2" CssClass="btn btn-primary" runat="server" Text="Login" OnClick="LoginButton_Click"/>
 
   <asp:Panel ID="MainPanel" CssClass="container" runat="server">
-    <asp:Label ID="OpenPositions" runat="server"></asp:Label>
 
   </asp:Panel>
 

@@ -8,6 +8,8 @@ public class CategoriesTable : BaseTable<CategoriesTable> {
 	public CategoriesTable() : base("CATEGORIES") { }
 
     public bool Insert(string category, out string error) {
+        category = category.Replace("'", "''");
+
         string commandString = string.Format("INSERT INTO CATEGORIES(Name) VALUES('{0}')", category);
         SqlCommand command = new SqlCommand(commandString, connection);
 

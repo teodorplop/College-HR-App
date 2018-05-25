@@ -20,6 +20,11 @@ public class UsersTable : BaseTable<UsersTable, User> {
     }
 
     public bool Insert(string username, string password, string first, string last, out string error) {
+        username = username.Replace("'", "''");
+        password = password.Replace("'", "''");
+        first = first.Replace("'", "''");
+        last = last.Replace("'", "''");
+
         if (string.IsNullOrWhiteSpace(username)) {
             error = "Please insert a username.";
             return false;

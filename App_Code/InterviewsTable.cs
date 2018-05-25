@@ -145,6 +145,9 @@ public class InterviewsTable : BaseTable<InterviewsTable, Interview> {
     }
 
 	public bool Insert(string studentEmail, int positionId, string interviewer, out string error) {
+        studentEmail = studentEmail.Replace("'", "''");
+        interviewer = interviewer.Replace("'", "''");
+
 		string commandString = string.Format("INSERT INTO INTERVIEWS(StudentId, Position, Interviewer) VALUES('{0}', '{1}', '{2}')", studentEmail, positionId, interviewer);
 		SqlCommand command = new SqlCommand(commandString, connection);
 
